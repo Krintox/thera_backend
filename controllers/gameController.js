@@ -70,7 +70,8 @@ exports.saveSoundMatchingGameData = async (req, res) => {
         await gameService.saveSoundMatchingGameData(userId, score, param1, param2, param3);
         
         // Update user's game progress to mark Sound Matching game as completed
-        await userService.updateGameProgress(userId, 'soundMatchingCompleted', true);
+        await userService.updateGameProgress(userId, 'tracePathCompleted', false);
+        await userService.updateGameProgress(userId, 'memoryMatchCompleted', false);
         
         // Calculate improvement/decrease in performance
         const improvement = await userService.calculateImprovement(userId, 'soundMatching', score);

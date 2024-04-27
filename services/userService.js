@@ -47,3 +47,26 @@ exports.calculateImprovementLastNGames = async (userId, n) => {
     const previousNScores = await gameService.getPreviousNGameScores(userId, n);
     return calculateImprovement(lastNScores.reduce((a, b) => a + b, 0) / n, previousNScores.reduce((a, b) => a + b, 0) / n);
 };
+
+// Update user profile name
+exports.updateName = async (userId, name) => {
+    return await User.findByIdAndUpdate(userId, { $set: { name } }, { new: true });
+};
+
+// Update user profile username
+exports.updateUsername = async (userId, username) => {
+    return await User.findByIdAndUpdate(userId, { $set: { username } }, { new: true });
+};
+
+// Update user profile email
+exports.updateEmail = async (userId, email) => {
+    return await User.findByIdAndUpdate(userId, { $set: { email } }, { new: true });
+};
+
+// Update user profile password
+exports.updatePassword = async (userId, password) => {
+    // Update password using your preferred password hashing method
+    // For example, using bcrypt:
+    const hashedPassword = await bcrypt.hash(password, 10);
+    return await User.findByIdAndUpdate(userId, { $set: { password: hashedPassword } }, { new: true });
+};
