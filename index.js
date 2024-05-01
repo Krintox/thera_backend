@@ -36,3 +36,8 @@ mongoose.connect(process.env.MONGODB_URI, {
 .catch((error) => {
     console.error('MongoDB connection error:', error);
 });
+
+// Route to display server status
+app.get('/', (req, res) => {
+    res.send('Server is up and running 🎉');
+});
