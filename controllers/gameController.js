@@ -10,10 +10,10 @@ const User = require('../models/User');
 exports.saveTracePathGameData = async (req, res) => {
     try {
         const userId = req.user._id;
-        const { score, progress, param1, param2, param3, param4, param5 } = req.body;
+        const { score, progress, gameOver, level, secondsLeft, figurePath, isTracing } = req.body;
 
         // Call saveTracePathGameData with userId as the first argument
-        await gameService.saveTracePathGameData(userId, score, progress, param1, param2, param3, param4, param5);
+        await gameService.saveTracePathGameData(userId, score, progress, gameOver, level, secondsLeft, figurePath, isTracing);
         
         // Update user's game progress to mark Trace the Path game as completed
         await userService.updateGameProgress(userId, 'tracePathCompleted', true);

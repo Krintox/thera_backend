@@ -1,5 +1,6 @@
 // services/userService.js
 const User = require('../models/User');
+const bcrypt = require('bcrypt');
 
 const GameSession = require('../models/GameSession');
 const calculateImprovement = require('../utils/calculateImprovement');
@@ -69,4 +70,8 @@ exports.updatePassword = async (userId, password) => {
     // For example, using bcrypt:
     const hashedPassword = await bcrypt.hash(password, 10);
     return await User.findByIdAndUpdate(userId, { $set: { password: hashedPassword } }, { new: true });
+};
+
+exports.getUserProfile = async (userId) => {
+    return await User.findById(userId).select('username email');
 };

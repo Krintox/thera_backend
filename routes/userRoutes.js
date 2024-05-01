@@ -20,4 +20,6 @@ router.put('/update-email', authMiddleware, userController.updateEmail);
 // Update user profile password
 router.put('/update-password', authMiddleware, userController.updatePassword);
 
+router.get('/profile', authMiddleware, userController.getUserProfile);
+
 module.exports = router;

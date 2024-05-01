@@ -16,6 +16,11 @@ const gameSessionSchema = new mongoose.Schema({
     param3: { type: String }, // Additional parameter 3 for all games
     param4: { type: String }, // Additional parameter 4 for all games
     param5: { type: String }, // Additional parameter 5 for all games
+    gameOver:{ type: Boolean },
+    level:{ type: String },
+    secondsLeft:{ type: String },
+    figurePath:{ type: String },
+    isTracing:{ type: Boolean }, 
     createdAt: { type: Date, default: Date.now }
 });
 

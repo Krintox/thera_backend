@@ -3,18 +3,18 @@
 const GameSession = require('../models/GameSession');
 
 // Save Trace the Path game data
-exports.saveTracePathGameData = async (userId, score, progress, param1, param2, param3, param4, param5) => {
+exports.saveTracePathGameData = async (userId, score, progress,  gameOver, level, secondsLeft, figurePath, isTracing) => {
     console.log('Saving Trace the Path game data for user:', userId);
     await GameSession.create({
         userId,
         gameName: 'trace-path',
         score,
         progress,
-        param1,
-        param2,
-        param3,
-        param4,
-        param5
+        gameOver,
+        level,
+        secondsLeft,
+        figurePath,
+        isTracing
     });
 };
 

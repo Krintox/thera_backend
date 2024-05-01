@@ -60,3 +60,13 @@ exports.updatePassword = async (req, res) => {
         res.status(500).json({ error: 'Internal server error' });
     }
 };
+
+exports.getUserProfile = async (req, res) => {
+    try {
+        const userProfile = await userService.getUserProfile(req.user._id);
+        res.status(200).json(userProfile);
+    } catch (error) {
+        console.error(error);
+        res.status(500).json({ error: 'Internal server error' });
+    }
+};
