@@ -9,9 +9,9 @@ const gameService = require('../services/gameService')
 exports.calculateImprovement = async (userId) => {
     // Fetch previous game sessions
     const previousSessions = await GameSession.find({ userId }).sort({ createdAt: -1 }).limit(2);
-    if (previousSessions.length < 2) {
-        throw new Error('Insufficient data for improvement analysis');
-    }
+    // if (previousSessions.length < 2) {
+    //     throw new Error('Insufficient data for improvement analysis');
+    // }
     const lastGameScore = previousSessions[0].score;
     const secondLastGameScore = previousSessions[1].score;
     // Calculate improvement percentage

@@ -33,6 +33,12 @@ exports.saveMemoryMatchGameData = async (req, res) => {
     try {
         const userId = req.user._id;
         const { score, timeTaken, trials, correctGuesses, wrongGuesses } = req.body;
+        console.log(userId);
+        console.log(score);
+        console.log(timeTaken);
+        console.log(trials);
+        console.log(correctGuesses);
+        console.log(wrongGuesses);
 
         // Check if the user has completed the previous game (Trace the Path)
         if (!req.user.gameProgress.tracePathCompleted) {
@@ -50,19 +56,28 @@ exports.saveMemoryMatchGameData = async (req, res) => {
 
         res.status(201).json({ message: 'Memory Match game data saved successfully', improvement });
     } catch (error) {
-        console.error(error);
+        console.error("Error in saveMemoryMatchGameData:", error);
+        if (error instanceof TypeError) {
+            return res.status(400).json({ error: 'Bad request: Invalid data format' });
+        }
         res.status(500).json({ error: 'Internal server error' });
     }
 };
+
 
 // Save Sound Matching game data
 exports.saveSoundMatchingGameData = async (req, res) => {
     try {
         const userId = req.user._id;
         const { score, param1, param2, param3 } = req.body;
+        console.log(score);
+        console.log(param1);
+        console.log(param2);
+        console.log(param3);
 
         // Check if the user has completed the previous game (Memory Match)
         if (!req.user.gameProgress.memoryMatchCompleted) {
+            console.log("complete memory match first");
             return res.status(403).json({ error: 'Forbidden: Complete Memory Match game first' });
         }
 

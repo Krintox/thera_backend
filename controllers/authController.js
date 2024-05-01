@@ -18,6 +18,8 @@ exports.register = async (req, res) => {
 exports.login = async (req, res) => {
     try {
         const { email, password } = req.body;
+        console.log(email);
+        console.log(password);
         const token = await authService.login(email, password);
         res.json({ token });
     } catch (error) {
