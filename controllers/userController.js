@@ -1,6 +1,7 @@
 // controllers/userController.js
 
 const userService = require('../services/userService');
+const Questionnaire = require('../models/Questionnaire');
 
 // Get improvement analysis based on previous games
 exports.getImprovementAnalysis = async (req, res) => {
@@ -65,6 +66,21 @@ exports.getUserProfile = async (req, res) => {
     try {
         const userProfile = await userService.getUserProfile(req.user._id);
         res.status(200).json(userProfile);
+    } catch (error) {
+        console.error(error);
+        res.status(500).json({ error: 'Internal server error' });
+    }
+};
+
+exports.submitQuestionnaire = async (req, res) => {
+    try {
+        const questionnaireData = req.body;
+        const userId = req.user._id;
+
+        // Save questionnaire data to the database
+        await userService.saveQuestionnaireData(userId, questionnaireData);
+
+        res.status(201).json({ message: 'Questionnaire submitted successfully' });
     } catch (error) {
         console.error(error);
         res.status(500).json({ error: 'Internal server error' });

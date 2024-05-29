@@ -1,7 +1,7 @@
 // services/userService.js
 const User = require('../models/User');
 const bcrypt = require('bcrypt');
-
+const Questionnaire = require('../models/Questionnaire');
 const GameSession = require('../models/GameSession');
 const calculateImprovement = require('../utils/calculateImprovement');
 const gameService = require('../services/gameService')
@@ -74,4 +74,9 @@ exports.updatePassword = async (userId, password) => {
 
 exports.getUserProfile = async (userId) => {
     return await User.findById(userId).select('username email');
+};
+
+// Save questionnaire data
+exports.saveQuestionnaireData = async (userId, questionnaireData) => {
+    await Questionnaire.create({ userId, ...questionnaireData });
 };

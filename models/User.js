@@ -8,9 +8,9 @@ const userSchema = new mongoose.Schema({
     password: { type: String, required: true },
     phoneNumber: { type: String },
     gameProgress: {
-        tracePathCompleted: { type: Boolean, default: false },
-        memoryMatchCompleted: { type: Boolean, default: false },
-        soundMatchingCompleted: { type: Boolean, default: false }
+        tracePathCompleted: { type: Boolean, default: true },
+        memoryMatchCompleted: { type: Boolean, default: true },
+        soundMatchingCompleted: { type: Boolean, default: true }
     },
     gameScores: {
       tracePath: [Number], // Last 10 game scores for Trace the Path
