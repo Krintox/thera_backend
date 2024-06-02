@@ -1,5 +1,3 @@
-// routes/gameRoutes.js
-
 const express = require('express');
 const router = express.Router();
 const gameController = require('../controllers/gameController');
@@ -13,6 +11,9 @@ router.post('/memory-match', authMiddleware, gameController.saveMemoryMatchGameD
 
 // Save Sound Matching game data
 router.post('/sound-matching', authMiddleware, gameController.saveSoundMatchingGameData);
+
+// Save ImageSort game data
+router.post('/image-sort', authMiddleware, gameController.saveImageSortGameData);
 
 // Get details of specific game for a specific user
 router.get('/:gameName/user/:userId', authMiddleware, gameController.getGameDetailsForUser);
@@ -37,6 +38,5 @@ router.get('/:gameName/improved-score/last-5-games', authMiddleware, gameControl
 
 // Get improved score for the last 10 games played
 router.get('/:gameName/improved-score/last-10-games', authMiddleware, gameController.getImprovedScoreLast10Games);
-
 
 module.exports = router;

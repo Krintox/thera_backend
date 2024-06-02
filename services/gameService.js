@@ -18,7 +18,6 @@ exports.saveTracePathGameData = async (userId, score, progress,  gameOver, level
     });
 };
 
-
 // Save Memory Match game data
 exports.saveMemoryMatchGameData = async (userId, score, timeTaken, trials, correctGuesses, wrongGuesses) => {
     await GameSession.create({
@@ -44,6 +43,19 @@ exports.saveSoundMatchingGameData = async (userId, score, param1, param2, param3
     });
 };
 
+// Save ImageSort game data
+exports.saveImageSortGameData = async (userId, time, score, accuracy, totalImages, param5) => {
+    await GameSession.create({
+        userId,
+        gameName: 'image-sort',
+        time,
+        score,
+        accuracy,
+        totalImages,
+        param5
+    });
+};
+
 exports.getGameDetailsForUser = async (gameName, userId) => {
     return await GameSession.findOne({ userId, gameName });
 };
@@ -62,7 +74,6 @@ exports.getAllGames = async () => {
 exports.getUserGames = async (userId) => {
     return await GameSession.find({ userId });
 };
-
 
 // Define getLastGameScore function
 exports.getLastGameScore = async (userId, gameName) => {

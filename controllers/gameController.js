@@ -98,6 +98,34 @@ exports.saveSoundMatchingGameData = async (req, res) => {
     }
 };
 
+// Save ImageSort game data
+exports.saveImageSortGameData = async (req, res) => {
+    try {
+        const userId = req.user._id;
+        const { time, score, accuracy, totalImages, param5 } = req.body;
+        console.log(userId);
+        console.log(time, score, accuracy, totalImages, param5);
+
+        // Call saveImageSortGameData with userId as the first argument
+        await gameService.saveImageSortGameData(userId, time, score, accuracy, totalImages, param5);
+
+        // Update user's game progress to mark Image Sort game as completed
+        await userService.updateGameProgress(userId, 'imageSortCompleted', true);
+
+        // Calculate improvement/decrease in performance
+        const improvement = await userService.calculateImprovement(userId, 'imageSort', score);
+
+        res.status(201).json({ message: 'Image Sort game data saved successfully', improvement });
+    } catch (error) {
+        console.error("Error in saveImageSortGameData:", error);
+        if (error instanceof TypeError) {
+            return res.status(400).json({ error: 'Bad request: Invalid data format' });
+        }
+        res.status(500).json({ error: 'Internal server error' });
+    }
+};
+
+
 
 
 // Get details of specific game for a specific user
