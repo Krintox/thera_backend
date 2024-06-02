@@ -9,7 +9,10 @@ const questionnaireSchema = new mongoose.Schema({
     therapyGoals: [{ type: String, required: true }],
     activityLevel: { type: String, required: true },
     preferredLearningStyle: { type: String, required: true },
-    accessibilityNeeds: { type: String, required: true },
+    accessibilityNeeds: {
+      type: [String], // Update this line to accept an array of strings
+      required: true,
+    },
     previousTherapyExperience: { type: String, required: true },
     createdAt: { type: Date, default: Date.now }
 });
