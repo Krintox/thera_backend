@@ -39,5 +39,5 @@ mongoose.connect(process.env.MONGODB_URI, {
 
 // Route to display server status
 app.get('/', (req, res) => {
-    res.send('Server is up and running 🎉');
+    res.send('Server is up and running 🎉🎉🎉');
 });
