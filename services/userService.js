@@ -79,4 +79,5 @@ exports.getUserProfile = async (userId) => {
 // Save questionnaire data
 exports.saveQuestionnaireData = async (userId, questionnaireData) => {
     await Questionnaire.create({ userId, ...questionnaireData });
+    await User.findByIdAndUpdate(userId, { $set: { isQuestionnaireComplete: true } });
 };
