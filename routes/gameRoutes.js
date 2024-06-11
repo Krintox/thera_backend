@@ -39,4 +39,15 @@ router.get('/:gameName/improved-score/last-5-games', authMiddleware, gameControl
 // Get improved score for the last 10 games played
 router.get('/:gameName/improved-score/last-10-games', authMiddleware, gameController.getImprovedScoreLast10Games);
 
+// New Endpoints for Analysis
+router.get('/:gameName/score/analysis', authMiddleware, gameController.getScoreAnalysis);
+router.get('/:gameName/overall/analysis', authMiddleware, gameController.getOverallAnalysis);
+
+// Add routes with middleware
+router.get('/trace-path/score/calculate', authMiddleware, gameController.calculateTracePathScore);
+router.get('/image-sort/score/calculate', authMiddleware, gameController.calculateImageSortScore);
+router.get('/memory-match/score/calculate', authMiddleware, gameController.calculateMemoryMatchScore);
+router.get('/overall/calculate', authMiddleware, gameController.calculateOverallHealthScore);
+
+
 module.exports = router;

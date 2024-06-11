@@ -233,3 +233,99 @@ exports.getImprovedScoreLast10Games = async (req, res) => {
         res.status(500).json({ error: 'Internal server error' });
     }
 };
+
+// Get Score Analysis
+exports.getScoreAnalysis = async (req, res) => {
+    try {
+        const { gameName } = req.params;
+        const userId = req.user._id;
+
+        const analysis = await gameService.getScoreAnalysis(userId, gameName);
+        res.json(analysis);
+    } catch (error) {
+        console.error(error);
+        res.status(500).json({ error: error.message });
+    }
+};
+
+// Get Overall Analysis
+exports.getOverallAnalysis = async (req, res) => {
+    try {
+        const { gameName } = req.params;
+        const userId = req.user._id;
+
+        const analysis = await gameService.getOverallAnalysis(userId, gameName);
+        res.json(analysis);
+    } catch (error) {
+        console.error(error);
+        res.status(500).json({ error: error.message });
+    }
+};
+
+
+// Calculate Trace Path Score
+exports.calculateTracePathScore = async (req, res) => {
+    try {
+        const userId = req.user._id;
+        const tracePathData = await gameService.getGameDetailsForUser('trace-path', userId);
+        
+        // Convert timeTaken from string to integer
+        const timeTakenInt = parseInt(tracePathData.secondsLeft, 10);
+        console.log("The time taken is (string):", tracePathData.secondsLeft);
+        console.log("The time taken is (integer):", timeTakenInt);
+        
+        // Ensure to pass the converted integer to the score calculation function
+        const score = gameService.calculateTracePathScore(tracePathData.score, timeTakenInt);
+        res.json({ score });
+    } catch (error) {
+        console.error(error);
+        res.status(500).json({ error: error.message });
+    }
+};
+
+
+// Calculate Image Sort Score
+exports.calculateImageSortScore = async (req, res) => {
+    try {
+        const userId = req.user._id;
+        const imageSortData = await gameService.getGameDetailsForUser('image-sort', userId);
+        const score = gameService.calculateImageSortScore(imageSortData.time, imageSortData.score, imageSortData.accuracy);
+        res.json({ score });
+    } catch (error) {
+        console.error(error);
+        res.status(500).json({ error: error.message });
+    }
+};
+
+// Calculate Memory Match Score
+exports.calculateMemoryMatchScore = async (req, res) => {
+    try {
+        const userId = req.user._id;
+        const memoryMatchData = await gameService.getGameDetailsForUser('memory-match', userId);
+        const score = gameService.calculateMemoryMatchScore(memoryMatchData.trials, memoryMatchData.wrongGuesses, memoryMatchData.timeTaken);
+        res.json({ score });
+    } catch (error) {
+        console.error(error);
+        res.status(500).json({ error: error.message });
+    }
+};
+
+// Calculate Overall Health Score
+exports.calculateOverallHealthScore = async (req, res) => {
+    try {
+        const userId = req.user._id;
+        const tracePathData = await gameService.getGameDetailsForUser('trace-path', userId);
+        const imageSortData = await gameService.getGameDetailsForUser('image-sort', userId);
+        const memoryMatchData = await gameService.getGameDetailsForUser('memory-match', userId);
+
+        const tracePathScore = gameService.calculateTracePathScore(tracePathData.score, tracePathData.secondsLeft);
+        const imageSortScore = gameService.calculateImageSortScore(imageSortData.time, imageSortData.score, imageSortData.accuracy);
+        const memoryMatchScore = gameService.calculateMemoryMatchScore(memoryMatchData.trials, memoryMatchData.wrongGuesses, memoryMatchData.timeTaken);
+
+        const overallScore = gameService.calculateOverallHealthScore(tracePathScore, imageSortScore, memoryMatchScore);
+        res.json({ overallScore });
+    } catch (error) {
+        console.error(error);
+        res.status(500).json({ error: error.message });
+    }
+};
