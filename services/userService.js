@@ -73,7 +73,7 @@ exports.updatePassword = async (userId, password) => {
 };
 
 exports.getUserProfile = async (userId) => {
-    return await User.findById(userId).select('username email');
+    return await User.findById(userId).select('username email isQuestionnaireComplete');
 };
 
 // Save questionnaire data
